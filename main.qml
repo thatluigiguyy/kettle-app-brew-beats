@@ -33,8 +33,8 @@ Rectangle {
     // ---- playback
     property int playStep: -1
     property bool playing: false
-    property string status: hasSound ? "Click the grid to add notes, then press Play."
-                                     : "No sound yet: open a terminal and run  kettle-update"
+    readonly property string noSound: "No sound yet: Kettle needs a one-time update. See github.com/thatluigiguyy/kettle-app-brew-beats"
+    property string status: hasSound ? "Click the grid to add notes, then press Play." : noSound
 
     function pitchOf(row) { return lowNote + rows - 1 - row }
     function rowOf(pitch) { return lowNote + rows - 1 - pitch }
@@ -103,7 +103,7 @@ Rectangle {
     }
 
     function play() {
-        if (!hasSound) { status = "No sound yet: open a terminal and run  kettle-update"; return }
+        if (!hasSound) { status = noSound; return }
         kettle.stop()
         stepTimer.stop()
         playStep = -1
